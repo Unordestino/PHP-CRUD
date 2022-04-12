@@ -12,7 +12,7 @@ if(count($_POST) > 0 ){
     $email =  $_POST['email'];
     $telefone =  $_POST['telefone'];
     $nascimento =  $_POST['nascimento'];
-    $senha = $_POST['senha'];
+    $senha =(string) $_POST['senha'];
 
     if(empty($nome)){
         $erro = "Preencha o nome";
@@ -22,8 +22,10 @@ if(count($_POST) > 0 ){
         $erro = "Preencha o e-mail";
     }
 
-    if(empty($senha) || $senha > 10){
-        $erro = "Preencha uma senha válida com até 10 caracteres";
+    if(empty($senha)){
+        $erro = "Senha não pode ser vazia";
+    }else if(mb_strlen($senha) < 8 || mb_strlen($senha) > 20){
+        $erro = "Preencha uma senha válida com até 8 caracteres";
     }else{
         $senha = password_hash($senha, PASSWORD_DEFAULT);
     }
