@@ -1,16 +1,29 @@
 <?php 
 include 'conexao.php';
+
+if(!isset($_SESSION))
+    session_start();
+
+if(!isset($_SESSION['usuario'])){
+    die('Você não está logado. <a href="index.php">Clique aqui</a> para logar.');
+}
+
+
 if(isset($_POST['confirmar'])){
     $id = intval($_GET['id']);
+    
+    if($id == $_SESSION['usuario'])
+        die('<p>Não é permitido deletar seu próprio usuário... <a href="clientes.php">Clique aqui</a> para voltar.</p>');
+
     $sql_code = "DELETE FROM clientes where id = $id";
     $sql_query = $mysqli->query($sql_code) or die($mysqli->error); 
 
-    if($sql_code){ ?>
+    ?>
         <h1>Cliente deletado com sucesso!</h1>
         <p><a href="clientes.php">Clique aqui</a> para voltar para a lista de clientes.</p>
         <?php
         die();
-    }
+    
 }
 ?>
 

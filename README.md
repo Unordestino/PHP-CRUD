@@ -1,3 +1,1 @@
-# PHP-CRUD
-Iniciando com banco de dados no php
-https://crud-php.davisilveira.com.br/
+Projeto simples com cookie, criptografia e sessão utilizando mysqli... Visualize o projeto em: http://portfolio.davisilveira.com.br/portfolio/CRUD/index.php

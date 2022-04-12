@@ -1,7 +1,5 @@
 <?php 
 
-
-
 function limpar_texto($str){
     return preg_replace("/[^0-9]/", "", $str);
 }
@@ -14,6 +12,7 @@ if(count($_POST) > 0 ){
     $email =  $_POST['email'];
     $telefone =  $_POST['telefone'];
     $nascimento =  $_POST['nascimento'];
+    $senha = $_POST['senha'];
 
     if(empty($nome)){
         $erro = "Preencha o nome";
@@ -23,6 +22,12 @@ if(count($_POST) > 0 ){
         $erro = "Preencha o e-mail";
     }
 
+    if(empty($senha) || $senha > 10){
+        $erro = "Preencha uma senha válida com até 10 caracteres";
+    }else{
+        $senha = password_hash($senha, PASSWORD_DEFAULT);
+    }
+
     if(!empty($nascimento)){
         $pedacoes = array_reverse(explode('/', $nascimento));
         if(count($pedacoes) == 3){
@@ -30,6 +35,8 @@ if(count($_POST) > 0 ){
         }else{
             $erro = "A data de nascimento deve seguir o padrão dia/mes/ano";
         }
+    } else{
+        $erro = "A data de nascimento deve seguir o padrão dia/mes/ano";
     }
 
     if(!empty($telefone)){
@@ -43,12 +50,16 @@ if(count($_POST) > 0 ){
     if($erro){
         echo "<p><b>ERRO: $erro</b></p>";
     }else{
-        $sql_code = "INSERT INTO clientes (nome, email, telefone, nascimento, data) 
-        VALUES ('$nome', '$email', '$telefone', '$nascimento', NOW())";
+        $sql_code = "INSERT INTO clientes (nome, email, senha, telefone, nascimento, data) 
+        VALUES ('$nome', '$email', '$senha' , '$telefone', '$nascimento', NOW())";
         $deu_certo = $mysqli->query($sql_code) or die($mysqli->error);
         if($deu_certo){
-            echo "<p><b>Cliente cadastrado com sucesso!!</b></p>";
-            unset($_POST);
+            session_start();
+
+            if($_SESSION['usuario'])
+                header("location: clientes.php");
+            else
+                header("location: index.php");
         }
     }
 
@@ -79,6 +90,11 @@ if(count($_POST) > 0 ){
             <label>E-mail</label>
             <input value="<?php if(isset($_POST['email'])) echo $email; ?>" name="email" type="text"><br>
         </p>
+
+        <p>
+            <label>Senha</label>
+            <input name="senha" type="text"><br>
+        </p>
         
         <p>
             <label>Telefone</label>
@@ -87,11 +103,12 @@ if(count($_POST) > 0 ){
 
         <p>
             <label>Data de Nascimento</label>
-            <input value="<?php if(isset($_POST['nascimento'])) echo $nascimento; ?>" name="nascimento" type="text"><br>
+            <input value="<?php if(isset($_POST['nascimento'])) echo date("d/m/Y", strtotime($nascimento)); ?>" name="nascimento" type="text"><br>
         </p>
 
         <p>
             <button type="submit">Salvar Cliente</button>
+            <button><a href="index.php">Login</a></button>
         </p>
     </form>
 

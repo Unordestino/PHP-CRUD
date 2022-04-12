@@ -1,9 +1,22 @@
 <?php 
 
 include "conexao.php";
+
+if(!isset($_SESSION))
+    session_start();
+
+if(!isset($_SESSION['usuario'])){
+    die('Você não está logado. <a href="index.php">Clique aqui</a> para logar.');
+}
+
 $id = intval($_GET['id']);
 $sql_cliente = "SELECT * FROM clientes WHERE id = '$id'";
 $query_cliente = $mysqli->query($sql_cliente) or die($mysqli->error);
+
+if($query_cliente->num_rows == 0){ // impedi de o usuario alterar a url para deletar
+    die("<p>Erro ao editar usuário</p>");
+}
+
 $cliente = $query_cliente->fetch_assoc();
 
 function limpar_texto($str){
@@ -34,6 +47,8 @@ if(count($_POST) > 0 ){
         }else{
             $erro = "A data de nascimento deve seguir o padrão dia/mes/ano";
         }
+    } else{
+        $erro = "A data de nascimento deve seguir o padrão dia/mes/ano";
     }
 
     if(!empty($telefone)){
@@ -91,7 +106,8 @@ if(count($_POST) > 0 ){
 
         <p>
             <label>Data de Nascimento</label>
-            <input value="<?php if(!empty($cliente['nascimento'])) echo formatar_data($cliente['nascimento']); ?>"name="nascimento" type="text"><br>
+            <input value="<?php if(!empty($cliente['nascimento'])) 
+            echo date("d/m/Y", strtotime($cliente['nascimento'])); ?>"name="nascimento" type="text"><br>
         </p>
 
         <p>

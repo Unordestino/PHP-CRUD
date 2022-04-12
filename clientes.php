@@ -1,6 +1,19 @@
 <?php 
 require_once 'conexao.php';
 
+if(!isset($_SESSION))
+    session_start();
+
+if(!isset($_SESSION['usuario'])){
+    die('Você não está logado. <a href="index.php">Clique aqui</a> para logar.');
+}
+
+$id = $_SESSION['usuario'];
+
+$sql_query = $mysqli->query("SELECT * FROM clientes WHERE id = '$id'") or die($mysqli->error);
+$usuario = $sql_query->fetch_assoc();
+
+
 $sql_clientes = "SELECT * FROM clientes";
 $query_clientes = $mysqli->query($sql_clientes) or die($mysqli->error);
 $num_clientes = $query_clientes->num_rows;
@@ -19,13 +32,16 @@ $num_clientes = $query_clientes->num_rows;
     <style>
         table tr td{
             padding: 10px;
-        }
+           
+        }  
+
+        
     </style>
 </head>
 <body>
 
     <h1>Liasta de Clientes</h1>
-    <p>Este são os clientes cadastrados no seu sistema</p>
+    <p>Bem-vindo, <?php echo strtoupper($usuario['nome']) ?>!!! Este são os clientes cadastrados no seu sistema</p>
 
     <table border="1" cellspacing="10">
         <thread>
@@ -50,6 +66,7 @@ $num_clientes = $query_clientes->num_rows;
                 if(!empty($cliente['telefone'])){
                     $telefone = formatar_telefone($cliente['telefone']);
                 }
+                
                 $nascimento = "Não informada";
                 if(!empty($cliente['nascimento'])){
                     $nascimento = formatar_data($cliente['nascimento']);
@@ -59,7 +76,7 @@ $num_clientes = $query_clientes->num_rows;
                 ?>
                 <tr>
                     <td><?php echo $cliente['id']; ?></td>
-                    <td><?php echo $cliente['nome']; ?></td>
+                    <td><?php echo $cliente['id'] == $usuario['id'] ?  '<div style="color: red;">' . $cliente['nome']   . "</div> ": $cliente['nome']; ?></td>
                     <td><?php echo $cliente['email']; ?></td>
                     <td><?php echo $telefone; ?></td>
                     <td><?php echo $nascimento; ?></td>
@@ -73,6 +90,10 @@ $num_clientes = $query_clientes->num_rows;
             } ?>
         </tbody>
     </table>
-<p><a href="cadastrar_cliente.php">Clique aqui</a> para cadastrar novos clientes</p>
+    <p> <button><a href="cadastrar.php">Cadastrar</a></button> 
+    <button><a href="logout.php">Logout</a></button>
+    </p>
+   
+
 </body>
 </html>
