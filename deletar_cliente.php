@@ -15,8 +15,17 @@ if(isset($_POST['confirmar'])){
     if($id == $_SESSION['usuario'])
         die('<p>Não é permitido deletar seu próprio usuário... <a href="clientes.php">Clique aqui</a> para voltar.</p>');
 
-    $sql_code = "DELETE FROM clientes where id = $id";
-    $sql_query = $mysqli->query($sql_code) or die($mysqli->error); 
+
+        $dele_img = $mysqli->query("SELECT * FROM clientes WHERE id = '$id'") or die($mysqli->error);
+        $arquivo = $dele_img->fetch_assoc();
+
+        
+        if(unlink($arquivo['path'])){ // verifica se a imagem existe para deletar do banco e do sistema
+            $sql_code = "DELETE FROM clientes where id = $id";
+            $sql_query = $mysqli->query($sql_code) or die($mysqli->error); 
+         }
+
+
 
     ?>
         <h1>Cliente deletado com sucesso!</h1>
