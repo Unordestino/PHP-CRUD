@@ -31,9 +31,14 @@ $num_clientes = $query_clientes->num_rows;
     <link href="css/style.css" rel="stylesheet">
     <style>
         table tr td{
-            padding: 10px;
-           
+            padding: 10px;  
         }  
+        img{
+         
+            max-width:320px;
+            width: auto;
+            border-radius: 50%;
+        }
 
         
     </style>
@@ -41,7 +46,10 @@ $num_clientes = $query_clientes->num_rows;
 <body>
 
     <h1>Liasta de Clientes</h1>
-    <p>Bem-vindo, <?php echo strtoupper($usuario['nome']) ?>!!! Este são os clientes cadastrados no seu sistema</p>
+    <p>
+        <img height="100px" src="<?php   echo $usuario['path'] ?>" alt="">
+        Bem-vindo, <?php echo strtoupper($usuario['nome']) ?>!!! Este são os clientes cadastrados no seu sistema
+    </p>
 
     <table border="1" cellspacing="10">
         <thread>

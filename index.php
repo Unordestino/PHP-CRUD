@@ -9,25 +9,20 @@ if (isset($_POST['email'])) {
     $sql_exec = $mysqli->query($sql_code) or die($mysqli->error);
 
     $usuario = $sql_exec->fetch_assoc();
-
     if (isset($usuario['senha'])) {
 
 
         if (password_verify($senha, $usuario['senha'])) {
-
             if (!isset($_SESSION)) {
                 session_start();
 
                 $_SESSION['usuario'] = $usuario['id'];
                 header("location: clientes.php");
             }
-
         } else {
             echo "Senha inválida...";
         }
-
-    } 
-    else {
+    } else {
         echo "E-mail inválido...";
     }
 }
@@ -47,7 +42,7 @@ if (isset($_POST['email'])) {
 
 <body>
 
-    <form action="" method="POST">
+    <form action=""  method="POST">
         <p>
             <label for="">E-mail</label>
             <input type="text" name="email">

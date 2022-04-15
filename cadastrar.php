@@ -1,11 +1,13 @@
 <?php 
 
+
 function limpar_texto($str){
     return preg_replace("/[^0-9]/", "", $str);
 }
 
 if(count($_POST) > 0 ){
     include "conexao.php";
+
     $erro = false;
 
     $nome =  $_POST['nome'];
@@ -48,12 +50,19 @@ if(count($_POST) > 0 ){
         }
     }
 
+    if(isset($_FILES["arquivo"])){
+        
+    
+        include("arquivos.php");
+
+    }
+
 
     if($erro){
         echo "<p><b>ERRO: $erro</b></p>";
     }else{
-        $sql_code = "INSERT INTO clientes (nome, email, senha, telefone, nascimento, data) 
-        VALUES ('$nome', '$email', '$senha' , '$telefone', '$nascimento', NOW())";
+        $sql_code = "INSERT INTO clientes (nome, foto, path, email, senha, telefone, nascimento, data) 
+        VALUES ('$nome', '$nomeDoArquivo', '$path', '$email', '$senha' , '$telefone', '$nascimento', NOW())";
         $deu_certo = $mysqli->query($sql_code) or die($mysqli->error);
         if($deu_certo){
             session_start();
@@ -82,7 +91,7 @@ if(count($_POST) > 0 ){
 
 <body>
     <a href="clientes.php">Voltar para a lista</a>
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data" >
         <p>
             <label>Nome</label>
             <input value="<?php if(isset($_POST['nome'])) echo $nome; ?>" name="nome" type="text"><br>
@@ -106,6 +115,12 @@ if(count($_POST) > 0 ){
         <p>
             <label>Data de Nascimento</label>
             <input value="<?php if(isset($_POST['nascimento'])) echo date("d/m/Y", strtotime($nascimento)); ?>" name="nascimento" type="text"><br>
+        </p>
+
+        <p>
+            <label for="">Selecione uma imagem de perfil</label>
+            <input name="arquivo" type="file">
+            <hr>
         </p>
 
         <p>
