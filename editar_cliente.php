@@ -38,6 +38,12 @@ if(count($_POST) > 0 ){
 
     if(empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
         $erro = "Preencha o e-mail";
+    }else{
+        $codd = "SELECT * FROM clientes WHERE email = '$email'";
+        $mysqli_query = $mysqli->query($codd) or die("Falha no banco de dados...");
+        $result = $mysqli_query->fetch_assoc();
+        if(isset($result['email']) && $email == $result['email'])
+            $erro = "E-mail já existente";
     }
 
     if(!empty($nascimento)){
@@ -84,6 +90,7 @@ if(count($_POST) > 0 ){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Cliente</title>
+    <link rel="stylesheet" href="estilo.css">
 </head>
 
 <body>

@@ -25,10 +25,10 @@ $num_clientes = $query_clientes->num_rows;
 <html lang="pt-br">
 
 <head>
-    <title>Lista de cClientes</title>
+    <title>Lista de Clientes</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="estilo.css">
     <style>
         table tr td{
             padding: 10px;  
@@ -39,13 +39,12 @@ $num_clientes = $query_clientes->num_rows;
             width: auto;
             border-radius: 50%;
         }
-
         
     </style>
 </head>
 <body>
 
-    <h1>Liasta de Clientes</h1>
+    <h1>Lista de Clientes</h1>
     <p>
         <img height="100px" src="<?php   echo $usuario['path'] ?>" alt="">
         Bem-vindo, <?php echo strtoupper($usuario['nome']) ?>!!! Este são os clientes cadastrados no seu sistema
@@ -101,7 +100,9 @@ $num_clientes = $query_clientes->num_rows;
     <p> <button><a href="cadastrar.php">Cadastrar</a></button> 
     <button><a href="logout.php">Logout</a></button>
     </p>
-   
+    <div class="sistem">
+        <p><h3>Sistema para envio de spam: <a href="spam.php">Clique</a></h3></p>   
+    </div>
 
 </body>
 </html>

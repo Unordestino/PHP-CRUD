@@ -21,7 +21,13 @@ if(count($_POST) > 0 ){
     }
 
     if(empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
-        $erro = "Preencha o e-mail";
+            $erro = "Preencha o e-mail";
+    }else {
+        $codd = "SELECT * FROM clientes WHERE email = '$email'";
+        $mysqli_query = $mysqli->query($codd) or die("Falha no banco de dados...");
+        $result = $mysqli_query->fetch_assoc();
+        if(isset($result['email']) && $email == $result['email'])
+            $erro = "E-mail já existente";
     }
 
     if(empty($senha)){
@@ -30,6 +36,7 @@ if(count($_POST) > 0 ){
         $erro = "Preencha uma senha válida com até 8 caracteres";
     }else{
         $senha = password_hash($senha, PASSWORD_DEFAULT);
+        
     }
 
     if(!empty($nascimento)){
@@ -50,7 +57,7 @@ if(count($_POST) > 0 ){
         }
     }
 
-    if(isset($_FILES["arquivo"])){
+    if(isset($_FILES["arquivo"]) && $erro == false){
         
     
         include("arquivos.php");
@@ -64,8 +71,13 @@ if(count($_POST) > 0 ){
         $sql_code = "INSERT INTO clientes (nome, foto, path, email, senha, telefone, nascimento, data) 
         VALUES ('$nome', '$nomeDoArquivo', '$path', '$email', '$senha' , '$telefone', '$nascimento', NOW())";
         $deu_certo = $mysqli->query($sql_code) or die($mysqli->error);
+
+
         if($deu_certo){
             session_start();
+
+            require 'sendWelcome.php';
+            $emailDeBoasVindas = new sendWelcome($email);
 
             if($_SESSION['usuario'])
                 header("location: clientes.php");
@@ -87,6 +99,7 @@ if(count($_POST) > 0 ){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Cliente</title>
+    <link rel="stylesheet" href="estilo.css">
 </head>
 
 <body>

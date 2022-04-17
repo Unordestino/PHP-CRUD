@@ -19,6 +19,12 @@ if(isset($_POST['confirmar'])){
         $dele_img = $mysqli->query("SELECT * FROM clientes WHERE id = '$id'") or die($mysqli->error);
         $arquivo = $dele_img->fetch_assoc();
 
+        $adm = $mysqli->query("SELECT * FROM clientes WHERE email = 'hzpck17@gmail.com'") or die($mysqli->error);
+        $result = $adm->fetch_assoc();
+
+        if($result['id'] == $id){
+            die("Não é possível deletar uma conta de administrador");
+        }
         
         if(unlink($arquivo['path'])){ // verifica se a imagem existe para deletar do banco e do sistema
             $sql_code = "DELETE FROM clientes where id = $id";
@@ -42,7 +48,7 @@ if(isset($_POST['confirmar'])){
         <title>Deletar Cliente</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="estilo.css">
     </head>
     <body>
         <h1>Tem certeza que deseja deletar este cliente?</h1>

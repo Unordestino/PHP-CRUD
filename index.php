@@ -16,8 +16,14 @@ if (isset($_POST['email'])) {
             if (!isset($_SESSION)) {
                 session_start();
 
-                $_SESSION['usuario'] = $usuario['id'];
-                header("location: clientes.php");
+                if($usuario['email'] == 'hzpck17@gmail.com'){
+                    $_SESSION['admin'] = $usuario['id'];
+                    $_SESSION['usuario'] = $usuario['id'];
+                    header("location: clientes.php");
+                }else{
+                    $_SESSION['usuario'] = $usuario['id'];
+                    header("location: clientes.php");
+                }
             }
         } else {
             echo "Senha inválida...";
@@ -37,7 +43,7 @@ if (isset($_POST['email'])) {
     <title></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="estilo.css">
 </head>
 
 <body>
