@@ -36,7 +36,8 @@ $num_clientes = $query_clientes->num_rows;
         img{
          
             max-width:320px;
-            width: auto;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
         }
         
@@ -44,15 +45,17 @@ $num_clientes = $query_clientes->num_rows;
 </head>
 <body>
 
-    <h1>Lista de Clientes</h1>
     <p>
         <img height="100px" src="<?php   echo $usuario['path'] ?>" alt="">
         Bem-vindo, <?php echo strtoupper($usuario['nome']) ?>!!! Este são os clientes cadastrados no seu sistema
     </p>
 
+    <h1>Lista de Clientes</h1>
+
     <table border="1" cellspacing="10">
         <thread>
             <th>ID</th>
+            <th>Imagem</th>
             <th>Nome</th>
             <th>E-mail</th>
             <th>Telefone</th>
@@ -83,6 +86,7 @@ $num_clientes = $query_clientes->num_rows;
                 ?>
                 <tr>
                     <td><?php echo $cliente['id']; ?></td>
+                    <td><img src="<?php echo $cliente['path']; ?>" alt=""></td>
                     <td><?php echo $cliente['id'] == $usuario['id'] ?  '<div style="color: red;">' . $cliente['nome']   . "</div> ": $cliente['nome']; ?></td>
                     <td><?php echo $cliente['email']; ?></td>
                     <td><?php echo $telefone; ?></td>

@@ -18,7 +18,7 @@ class send{
     $mail->isHTML(true);
     $mail->CharSet = 'UTF-8';
 
-    $mail->setFrom('suporte@davisilveira.com.br', 'Suporte');
+    $mail->setFrom('seu-email', 'Suporte');
     $mail->addAddress("$email");
     $mail->Subject = "$assunto";
     $mail->Body = "$corpo";

@@ -18,7 +18,7 @@ class sendWelcome{
     $mail->isHTML(true);
     $mail->CharSet = 'UTF-8';
 
-    $mail->setFrom('suporte@davisilveira.com.br', 'Suporte');
+    $mail->setFrom('seu-email', 'Suporte');
     $mail->addAddress("$email");
     $mail->Subject = "Bem vindo";
     $mail->Body = "<h1>Bem vindo ao sistema Biotec</h1>";

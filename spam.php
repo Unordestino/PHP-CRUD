@@ -6,7 +6,7 @@ if(!isset($_SESSION))
     session_start();
 
 if(!isset($_SESSION['admin'])){
-    die('Você não está logado. <a href="index.php">Clique aqui</a> para logar.');
+    die('Acesso permitido apenas para o administrador do site. <a href="index.php">Clique aqui</a> para logar.');
 }
 
 
@@ -61,7 +61,7 @@ if(count($_POST) > 0 ){
 
             <p>
                 <button type="submit">Enviar Spam</button>
-                <button><a href="index.php">Voltar</a></button>
+                <a href="clientes.php">Voltar</a>
             </p>
         </form>
         

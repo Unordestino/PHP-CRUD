@@ -39,11 +39,18 @@ if(count($_POST) > 0 ){
     if(empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
         $erro = "Preencha o e-mail";
     }else{
-        $codd = "SELECT * FROM clientes WHERE email = '$email'";
+
+        $codd = "SELECT email, id FROM clientes";
         $mysqli_query = $mysqli->query($codd) or die("Falha no banco de dados...");
         $result = $mysqli_query->fetch_assoc();
-        if(isset($result['email']) && $email == $result['email'])
+
+        $id = intval($_GET['id']);
+
+        while($result = $mysqli_query->fetch_assoc()){
+            if($email == $result['email'] && $id != $result['id'] || $email == 'hzpck17@gmail.com')
             $erro = "E-mail já existente";
+        }
+
     }
 
     if(!empty($nascimento)){
@@ -64,6 +71,12 @@ if(count($_POST) > 0 ){
         }
     }
 
+    $adm = $mysqli->query("SELECT * FROM clientes WHERE email = 'hzpck17@gmail.com'") or die($mysqli->error);
+    $result = $adm->fetch_assoc();
+
+    if($result['id'] == $id){
+        $erro = "Não é possível editar uma conta de administrador";
+    }
 
     if($erro){
         echo "<p><b>ERRO: $erro</b></p>";
