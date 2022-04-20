@@ -56,7 +56,7 @@ if(count($_POST) > 0 ){
             <p>
                 <label>Mensagem</label>
                 <br>
-                <textarea rows="10" cols="40" maxlength="500" name="mensagem" type="text"><?php if(isset($_POST['mensagem'])) echo $mensagem; ?></textarea><br>
+                <textarea rows="10" cols="40"  name="mensagem" type="text"><?php if(isset($_POST['mensagem'])) echo $mensagem; ?></textarea><br>
             </p>
 
             <p>

@@ -7,9 +7,9 @@ class send{
     public function __construct(string $email, string $assunto, string $corpo, int $repetir){
     $mail = new PHPMailer;
     $mail->isSMTP();
-    //$mail->SMTPDebug = 2;
+    $mail->SMTPDebug = 0;
     $mail-> Host = 'mail.davisilveira.com.br';
-    $mail->Port = 25;
+    $mail->Port = 587;
     $mail-> SMTPAuth = true;
     $mail->Username = 'seu-email';
     $mail->Password = 'sua-senha';
@@ -18,7 +18,7 @@ class send{
     $mail->isHTML(true);
     $mail->CharSet = 'UTF-8';
 
-    $mail->setFrom('seu-email', 'Suporte');
+    $mail->setFrom('info@shope.com.br', 'Shoope');
     $mail->addAddress("$email");
     $mail->Subject = "$assunto";
     $mail->Body = "$corpo";

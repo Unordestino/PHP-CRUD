@@ -106,6 +106,7 @@ $num_clientes = $query_clientes->num_rows;
     </p>
     <div class="sistem">
         <p><h3>Sistema para envio de spam: <a href="spam.php">Clique</a></h3></p>   
+        <p><h3>Sistema para pesquisar veículos: <a href="buscar.php">Clique</a></h3></p>   
     </div>
 
 </body>

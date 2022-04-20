@@ -9,7 +9,7 @@ class sendWelcome{
     $mail->isSMTP();
    // $mail->SMTPDebug = 1;
     $mail-> Host = 'mail.davisilveira.com.br';
-    $mail->Port = 25;
+    $mail->Port = 587;
     $mail-> SMTPAuth = true;
     $mail->Username = 'seu-email';
     $mail->Password = 'sua-senha';
@@ -18,7 +18,7 @@ class sendWelcome{
     $mail->isHTML(true);
     $mail->CharSet = 'UTF-8';
 
-    $mail->setFrom('seu-email', 'Suporte');
+    $mail->setFrom('suporte@davisilveira.com.br', 'Suporte');
     $mail->addAddress("$email");
     $mail->Subject = "Bem vindo";
     $mail->Body = "<h1>Bem vindo ao sistema Biotec</h1>";
